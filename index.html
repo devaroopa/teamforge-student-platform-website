@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TeamForge | Smart Student Collaboration</title>
+<style>
+:root {
+  --bg:#0a0f1e;--panel:#141c30;--panel2:#1d2942;
+  --text:#f3f5ff;--muted:#a2aec5;--accent:#9685ff;
+  --green:#45d6a0;--border:#2a3651;--red:#ff818e;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:Arial,sans-serif;line-height:1.55}
+header{padding:16px 5%;display:flex;justify-content:space-between;
+align-items:center;gap:12px;flex-wrap:wrap;background:#0e1527;
+border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5}
+.logo{font-size:24px;font-weight:800}.logo span{color:var(--accent)}
+nav{display:flex;gap:7px;flex-wrap:wrap}
+button{cursor:pointer;border:0;border-radius:9px;padding:10px 13px;
+background:var(--accent);color:white;font-weight:bold}
+button.secondary{background:var(--panel2);border:1px solid var(--border)}
+button.danger{background:#482332;color:#ffbec6}
+button:hover{filter:brightness(1.13)}
+main{max-width:1100px;margin:auto;padding:24px 16px}
+.hero{padding:28px;border:1px solid var(--border);border-radius:18px;
+background:linear-gradient(130deg,#24244d,#141c30 70%,#252044)}
+h1{font-size:clamp(29px,5vw,43px);line-height:1.2;margin:8px 0}
+h2{font-size:22px;margin:0 0 16px}h3{margin:0 0 8px}
+p{color:var(--muted)}.muted{color:var(--muted);font-size:13px}
+.accent{color:var(--accent)}
+.section{margin-top:25px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+.card{padding:18px;background:var(--panel);border:1px solid var(--border);
+border-radius:14px;min-width:0}
+.number{font-size:29px;font-weight:bold;color:var(--green)}
+label{display:block;font-size:13px;color:#c6d0e4;margin-top:10px}
+input,select,textarea{width:100%;padding:12px;margin:5px 0 10px;
+background:#0c1427;color:var(--text);border:1px solid var(--border);
+border-radius:9px;font:inherit}
+.skills{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.chip{font-size:12px;background:#2a264d;color:#d9d2ff;
+border:1px solid #494179;padding:5px 9px;border-radius:20px}
+.chip.missing{background:#43242e;color:#ffb8c0;border-color:#70404b}
+.chip.good{background:#143c34;color:#a8f3d7;border-color:#286657}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.progress{height:8px;background:#2a3650;border-radius:20px;overflow:hidden;margin:10px 0}
+.progress div{height:100%;background:var(--green)}
+.item{padding:13px 0;border-bottom:1px solid var(--border)}
+.item:last-child{border-bottom:0}
+.notice{color:var(--green);font-size:13px}
+.hidden{display:none!important}
+footer{text-align:center;padding:25px;color:var(--muted)}
+@media(max-width:600px){
+ header{position:static}.stats{grid-template-columns:1fr}
+ .grid{grid-template-columns:1fr}main{padding:17px 12px}.hero{padding:20px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">⚡ Team<span>Forge</span></div>
+  <nav>
+    <button class="secondary" onclick="showPage('home')">Home</button>
+    <button class="secondary" onclick="showPage('profile')">Profile</button>
+    <button class="secondary" onclick="showPage('projects')">Projects</button>
+    <button class="secondary" onclick="showPage('matcher')">Team Matcher</button>
+    <button class="secondary" onclick="showPage('contributions')">Contributions</button>
+  </nav>
+</header>
+
+<main>
+<section id="home">
+  <div class="hero">
+    <p class="accent">ENGINEERING STUDENT COLLABORATION PLATFORM</p>
+    <h1>Find your team.<br><span class="accent">Build something great.</span></h1>
+    <p>Discover project ideas, match skills, identify gaps and track team contributions.</p>
+    <div class="actions">
+      <button onclick="showPage('matcher')">Find Skill Matches →</button>
+      <button class="secondary" onclick="showPage('projects')">Create Project</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="card"><div class="muted">My Skills</div><div id="statSkills" class="number">0</div></div>
+    <div class="card"><div class="muted">Projects</div><div id="statProjects" class="number">0</div></div>
+    <div class="card"><div class="muted">Completed Tasks</div><div id="statTasks" class="number">0</div></div>
+  </div>
+
+  <div class="section">
+    <h2>✨ TeamForge Features</h2>
+    <div class="grid">
+      <div class="card"><h3>👥 Smart Team Matcher</h3><p>Compare your skills with project requirements.</p></div>
+      <div class="card"><h3>🎯 Skill Gap Analyzer</h3><p>Discover missing skills and plan improvements.</p></div>
+      <div class="card"><h3>📊 Contribution Tracker</h3><p>Track each member's assigned and completed work.</p></div>
+      <div class="card"><h3>💡 Project Hub</h3><p>Create, search and organize engineering projects.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="profile" class="hidden">
+  <h2>👤 My Student Profile</h2>
+  <div class="card">
+    <label for="name">Full name</label>
+    <input id="name" placeholder="Enter your name">
+    <label for="department">Department</label>
+    <select id="department">
+      <option>CSE</option><option>IT</option><option>ECE</option>
+      <option>EEE</option><option>Mechanical</option><option>Civil</option><option>Other</option>
+    </select>
+    <label for="year">Year</label>
+    <select id="year"><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select>
+    <label for="mySkills">Your skills, separated by commas</label>
+    <textarea id="mySkills" rows="3" placeholder="HTML, CSS, Python, Java, Database"></textarea>
+    <label for="interest">Interests</label>
+    <input id="interest" placeholder="AI, Web Development, Robotics">
+    <label for="github">GitHub profile URL (optional)</label>
+    <input id="github" placeholder="https://github.com/username">
+    <button onclick="saveProfile()">Save Profile</button>
+    <p id="profileMessage" class="notice"></p>
+  </div>
+</section>
+
+<section id="projects" class="hidden">
+  <h2>🚀 Project Hub</h2>
+  <div class="card">
+    <h3>Create a project</h3>
+    <label for="pname">Project name</label>
+    <input id="pname" placeholder="Smart Campus Assistant">
+    <label for="desc">Problem and project description</label>
+    <textarea id="desc" rows="3" placeholder="What problem does this project solve?"></textarea>
+    <label for="req">Required skills (comma-separated)</label>
+    <input id="req" placeholder="Python, HTML, Database">
+    <label for="plink">GitHub repository URL (optional)</label>
+    <input id="plink" placeholder="https://github.com/username/project">
+    <button onclick="addProject()">Create Project</button>
+    <p id="projectMessage" class="notice"></p>
+  </div>
+
+  <div class="section">
+    <label for="search">Search projects by name or skill</label>
+    <input id="search" oninput="renderProjects()" placeholder="Search projects...">
+    <div id="projectList"></div>
+  </div>
+</section>
+
+<section id="matcher" class="hidden">
+  <h2>👥 Smart Team Matcher</h2>
+  <p>Choose a project to see how your skills match its requirements.</p>
+  <div class="card">
+    <label for="matchProject">Select project</label>
+    <select id="matchProject" onchange="renderMatch()"></select>
+    <div id="matchResult"></div>
+  </div>
+  <div class="section card">
+    <h3>🧠 How matching works</h3>
+    <p>The score measures how many required skills match your saved profile. It is a simple demo calculation, not an assessment of your overall ability or actual team compatibility.</p>
+  </div>
+</section>
+
+<section id="contributions" class="hidden">
+  <h2>📊 Contribution Tracker</h2>
+  <div class="card">
+    <h3>Add a team task</h3>
+    <label for="taskProject">Project</label>
+    <select id="taskProject"></select>
+    <label for="member">Member name</label>
+    <input id="member" placeholder="Enter member name">
+    <label for="task">Task description</label>
+    <input id="task" placeholder="Build the homepage">
+    <button onclick="addTask()">Add Task</button>
+  </div>
+  <div class="section card">
+    <h3>Task contributions</h3>
+    <div id="taskList"></div>
+  </div>
+  <div class="section card">
+    <h3>Member progress</h3>
+    <div id="memberProgress"></div>
+  </div>
+</section>
+</main>
+
+<footer>TeamForge · Build Better Teams · Student Project Demo</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const safeLoad = (key, fallback) => {
+  try {
+    const raw = localStorage.getItem("tf_" + key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch(e) { return fallback; }
+};
+const save = (key, value) => {
+  try { localStorage.setItem("tf_" + key, JSON.stringify(value)); }
+  catch(e) { alert("Browser storage is unavailable."); }
+};
+const splitSkills = value => [...new Set(value.split(",").map(s=>s.trim()).filter(Boolean))];
+
+let profile = safeLoad("profile", {
+  name:"",department:"CSE",year:"1st Year",skills:[],interest:"",github:""
+});
+let projects = safeLoad("projects", []);
+let tasks = safeLoad("tasks", []);
+
+function validUrl(value) {
+  try {
+    const u = new URL(value);
+    return u.protocol === "https:" || u.protocol === "http:";
+  } catch(e) { return false; }
+}
+function showPage(id) {
+  ["home","profile","projects","matcher","contributions"].forEach(p =>
+    $(p).classList.toggle("hidden",p!==id));
+  if(id==="profile") fillProfile();
+  if(id==="projects") renderProjects();
+  if(id==="matcher") { fillProjectSelect("matchProject");renderMatch(); }
+  if(id==="contributions") { fillProjectSelect("taskProject");renderTasks(); }
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function fillProfile() {
+  $("name").value=profile.name;
+  $("department").value=profile.department;
+  $("year").value=profile.year;
+  $("mySkills").value=profile.skills.join(", ");
+  $("interest").value=profile.interest;
+  $("github").value=profile.github;
+}
+function saveProfile() {
+  const url=$("github").value.trim();
+  if(url && !validUrl(url)) {alert("Please enter a valid GitHub URL.");return;}
+  profile={
+    name:$("name").value.trim(),
+    department:$("department").value,
+    year:$("year").value,
+    skills:splitSkills($("mySkills").value),
+    interest:$("interest").value.trim(),
+    github:url
+  };
+  save("profile",profile);
+  $("profileMessage").textContent="Profile saved successfully!";
+  updateStats();
+  renderMatch();
+}
+function addProject() {
+  const name=$("pname").value.trim();
+  const desc=$("desc").value.trim();
+  const skills=splitSkills($("req").value);
+  const link=$("plink").value.trim();
+  if(!name || !desc || !skills.length) {
+    $("projectMessage").textContent="Enter the project name, description and required skills.";
+    return;
+  }
+  if(link && !validUrl(link)) {
+    $("projectMessage").textContent="Please enter a valid project URL.";
+    return;
+  }
+  projects.push({id:Date.now(),name,desc,skills,link});
+  save("projects",projects);
+  $("pname").value="";$("desc").value="";$("req").value="";$("plink").value="";
+  $("projectMessage").textContent="Project created successfully!";
+  renderProjects();updateStats();
+}
+function getMatch(project) {
+  const own=profile.skills.map(s=>s.toLowerCase());
+  const matched=project.skills.filter(s=>own.includes(s.toLowerCase()));
+  const missing=project.skills.filter(s=>!own.includes(s.toLowerCase()));
+  return {matched,missing,score:project.skills.length?
+    Math.round(matched.length/project.skills.length*100):0};
+}
+function makeChip(text,cls="") {
+  const el=document.createElement("span");
+  el.className="chip "+cls;el.textContent=text;return el;
+}
+function renderProjects() {
+  const list=$("projectList");list.innerHTML="";
+  const q=$("search").value.toLowerCase();
+  const filtered=projects.filter(p=>(p.name+" "+p.desc+" "+p.skills.join(" ")).toLowerCase().includes(q));
+  if(!filtered.length) {list.textContent="No projects found. Create your first project above.";return;}
+  filtered.forEach(p=>{
+    const m=getMatch(p);
+    const card=document.createElement("div");card.className="card section";
+    const title=document.createElement("h3");title.textContent=p.name;card.appendChild(title);
+    const desc=document.createElement("p");desc.textContent=p.desc;card.appendChild(desc);
+    const chips=document.createElement("div");chips.className="skills";
+    p.skills.forEach(s=>chips.appendChild(makeChip(s,m.matched.some(x=>x.toLowerCase()===s.toLowerCase())?"good":"")));
+    card.appendChild(chips);
+    const score=document.createElement("p");score.textContent="Your skill match: "+m.score+"%";card.appendChild(score);
+    const bar=document.createElement("div");bar.className="progress";
+    const fill=document.createElement("div");fill.style.width=m.score+"%";bar.appendChild(fill);card.appendChild(bar);
+    const gap=document.createElement("p");gap.textContent=m.missing.length?"Skills to develop: "+m.missing.join(", "):"All listed skills match your profile.";card.appendChild(gap);
+    const actions=document.createElement("div");actions.className="actions";
+    const matchBtn=document.createElement("button");matchBtn.textContent="Analyze Skills";
+    matchBtn.onclick=()=>{showPage("matcher");$("matchProject").value=String(p.id);renderMatch();};
+    actions.appendChild(matchBtn);
+    const del=document.createElement("button");del.className="danger";del.textContent="Delete";
+    del.onclick=()=>{if(confirm("Delete this project and its tasks?")){projects=projects.filter(x=>x.id!==p.id);tasks=tasks.filter(t=>t.projectId!==p.id);save("projects",projects);save("tasks",tasks);renderProjects();updateStats();}};
+    actions.appendChild(del);
+    if(p.link) {
+      const a=document.createElement("a");a.href=p.link;a.target="_blank";a.rel="noopener noreferrer";
+      a.textContent="GitHub ↗";a.style.color="#b5aaff";a.style.padding="8px";
+      actions.appendChild(a);
+    }
+    card.appendChild(actions);list.appendChild(card);
+  });
+}
+function fillProjectSelect(id) {
+  const select=$(id);const previous=select.value;select.innerHTML="";
+  const first=document.createElement("option");first.value="";first.textContent="Choose a project";
+  select.appendChild(first);
+  projects.forEach(p=>{const o=document.createElement("option");o.value=p.id;o.textContent=p.name;select.appendChild(o);});
+  if(projects.some(p=>String(p.id)===previous))select.value=previous;
+}
+function renderMatch() {
+  const box=$("matchResult");box.innerHTML="";
+  const id=Number($("matchProject").value);
+  const p=projects.find(x=>x.id===id);
+  if(!p){box.textContent="Create a project first, then select it here.";return;}
+  const m=getMatch(p);
+  const score=document.createElement("div");score.className="number";score.textContent=m.score+"% skill match";box.appendChild(score);
+  const bar=document.createElement("div");bar.className="progress";
+  const fill=document.createElement("div");fill.style.width=m.score+"%";bar.appendChild(fill);box.appendChild(bar);
+  const matched=document.createElement("h3");matched.textContent="Matched skills";box.appendChild(matched);
+  const a=document.createElement("div");a.className="skills";
+  (m.matched.length?m.matched:["No matched skills yet"]).forEach(s=>a.appendChild(makeChip(s,"good")));box.appendChild(a);
+  const missing=document.createElement("h3");missing.textContent="Missing skills";box.appendChild(missing);
+  const b=document.createElement("div");b.className="skills";
+  (m.missing.length?m.missing:["No skill gaps in the listed requirements"]).forEach(s=>b.appendChild(makeChip(s,m.missing.length?"missing":"good")));box.appendChild(b);
+  const note=document.createElement("p");note.textContent="Recommendation: "+(m.missing.length?"Find teammates or learn: "+m.missing.join(", "):"Your profile covers all listed project skills.");box.appendChild(note);
+  const disclaimer=document.createElement("p");disclaimer.className="muted";disclaimer.textContent="This score compares your saved skills with the project's required skills. It does not yet search real students.";box.appendChild(disclaimer);
+}
+function addTask() {
+  const name=$("task").value.trim();
+  const member=$("member").value.trim();
+  const projectId=Number($("taskProject").value);
+  if(!name||!member){alert("Enter both a member name and task.");return;}
+  if(!projectId||!projects.some(p=>p.id===projectId)){alert("Create and select a project first.");return;}
+  tasks.push({id:Date.now(),name,member,projectId,done:false});
+  save("tasks",tasks);$("task").value="";$("member").value="";
+  renderTasks();updateStats();
+}
+function renderTasks() {
+  const list=$("taskList");list.innerHTML="";
+  if(!tasks.length)list.textContent="No tasks yet. Add a task above.";
+  tasks.forEach(t=>{
+    const row=document.createElement("div");row.className="item";
+    const check=document.createElement("input");check.type="checkbox";check.checked=t.done;
+    check.style.width="auto";check.style.marginRight="8px";
+    check.onchange=()=>{t.done=check.checked;save("tasks",tasks);renderTasks();updateStats();};
+    const text=document.createElement("span");text.textContent=t.name;
+    if(t.done)text.style.textDecoration="line-through";
+    const project=projects.find(p=>p.id===t.projectId);
+    const info=document.createElement("div");info.className="muted";
+    info.textContent="Member: "+t.member+(project?" · Project: "+project.name:"");
+    row.append(check,text,info);
+    const del=document.createElement("button");del.className="danger";del.textContent="Delete task";del.style.marginTop="8px";
+    del.onclick=()=>{tasks=tasks.filter(x=>x.id!==t.id);save("tasks",tasks);renderTasks();updateStats();};
+    row.appendChild(del);list.appendChild(row);
+  });
+  const progress=$("memberProgress");progress.innerHTML="";
+  if(!tasks.length){progress.textContent="Member progress will appear when tasks are added.";return;}
+  const names=[...new Set(tasks.map(t=>t.member.toLowerCase()))];
+  names.forEach(n=>{
+    const group=tasks.filter(t=>t.member.toLowerCase()===n);
+    const done=group.filter(t=>t.done).length;
+    const heading=document.createElement("p");
+    heading.textContent=group[0].member+": "+done+"/"+group.length+" tasks completed";
+    progress.appendChild(heading);
+    const bar=document.createElement("div");bar.className="progress";
+    const fill=document.createElement("div");fill.style.width=(done/group.length*100)+"%";
+    bar.appendChild(fill);progress.appendChild(bar);
+  });
+}
+function updateStats() {
+  $("statSkills").textContent=profile.skills.length;
+  $("statProjects").textContent=projects.length;
+  $("statTasks").textContent=tasks.filter(t=>t.done).length;
+}
+fillProfile();
+updateStats();
+</script>
+</body>
+</html>
